@@ -22,5 +22,7 @@ RUN mkdir -p $APACHE_LOG_DIR
 #Install composer
 RUN composer global require "laravel/lumen-installer"
 
+WORKDIR /var/www
+
 ENTRYPOINT [ "/usr/sbin/apache2ctl" ]
 CMD [ "-D", "FOREGROUND" ]
