@@ -1,0 +1,108 @@
+//// -- LEVEL 1
+//// -- Tables and References
+
+// Creating tables
+Table stores as s {
+  id int [pk, increment] // auto-increment
+  store_code int
+  name varchar
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table contracts as c {
+  id int [pk, increment]
+  contract_num varchar
+  description varchar
+  budget decimal
+  num_demos int
+  num_endcaps int
+  start_at timestamp
+  end_at timestamp
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table items as i {
+  id int [pk, increment]
+  item_code varchar
+  name varchar
+  description varchar
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table vendors as v {
+  id int [pk, increment]
+  vendor_code varchar
+  name varchar
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table departments as d {
+  id int [pk, increment]
+  department_code varchar
+  name varchar
+  description varchar
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table contracts_to_stores as cts{
+  id int [pk, increment]
+  contract_id int  
+  store_id int
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table contracts_to_departments as ctd{
+  id int [pk, increment]
+  contract_id int  
+  department_id int
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table contracts_to_items as cti{
+  id int [pk, increment]
+  contract_id int  
+  item_id int
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table contracts_to_vendors as ctv{
+  id int [pk, increment]
+  contract_id int  
+  vendor_id int
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+// Creating references
+// You can also define relaionship separately
+// > many-to-one; < one-to-many; - one-to-one
+//Ref: U.country_code > countries.code  
+//Ref: merchants.country_code > countries.code
+Ref: "contracts".id < "contracts_to_stores"."contract_id"
+Ref: "stores"."id" < "contracts_to_stores"."store_id"
+Ref: "contracts"."id" < "contracts_to_departments"."contract_id"
+Ref: "departments"."id" < "contracts_to_departments"."department_id"
+Ref: "contracts"."id" < "contracts_to_items"."contract_id"
+Ref: "items"."id" < "contracts_to_items"."item_id"
+Ref: "contracts"."id" < "contracts_to_vendors"."contract_id"
+Ref: "vendors"."id" < "contracts_to_vendors"."vendor_id"
+
+
+
+
