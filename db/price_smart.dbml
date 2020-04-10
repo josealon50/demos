@@ -89,6 +89,15 @@ Table contracts_to_vendors as ctv{
   created_at timestamp
   updated_at timestamp
 }
+
+Table items_to_vendors as itv{
+  id int [pk, increment]
+  vendor_id int
+  item_id int  
+  is_deleted timestamp
+  created_at timestamp
+  updated_at timestamp
+}
 // Creating references
 // You can also define relaionship separately
 // > many-to-one; < one-to-many; - one-to-one
@@ -102,6 +111,8 @@ Ref: "contracts"."id" < "contracts_to_items"."contract_id"
 Ref: "items"."id" < "contracts_to_items"."item_id"
 Ref: "contracts"."id" < "contracts_to_vendors"."contract_id"
 Ref: "vendors"."id" < "contracts_to_vendors"."vendor_id"
+Ref: "vendors"."id" < "items_to_vendors"."vendor_id"
+Ref: "items"."id" < "items_to_vendors"."item_id"
 
 
 
