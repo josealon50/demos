@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+    price_smart:
+        build:
+            context: .
+            dockerfile: price_smart.Dockerfile
+        image: price_smart_schedule_demos
+        volumes:
+            - ./demos/:/var/www/
+        ports:
+            - "80:80"
+            - "8080:8080"
+    price_smart_db:
+        image: mysql:8.0.19
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - "3306:3306"
+        volumes:
+            - price_smart_db_dev:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: 'rootpassword'
+            MYSQL_USER: 'price_smart'
+            MYSQL_PASSWORD: 'password'
+            MYSQL_DATABASE: 'price_smart_db'
+volumes:
+    price_smart_db_dev:
+
