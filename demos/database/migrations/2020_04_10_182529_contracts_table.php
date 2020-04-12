@@ -17,7 +17,7 @@ class ContractsTable extends Migration
             $table->id();
             $table->integer('contract_num');
             $table->longText('description');
-            $table->decimal('budget', 8, 4);
+            $table->decimal('budget', 15, 4);
             $table->integer('num_demos');
             $table->integer('num_endcaps');
             $table->date('start_at');
