@@ -15,7 +15,8 @@ class AddContractsColumnVendorId extends Migration
     {
         Schema::table('contracts', function($table)
         {
-            $table->integer('vendor_id')->after('contract_num');
+            $table->unsignedBigInteger('vendor_id')->after('contract_num');
+            $table->foreign('vendor_id')->references('id')->on('vendors');
         });
     }
 
@@ -27,7 +28,7 @@ class AddContractsColumnVendorId extends Migration
     public function down()
     {
         Schema::table('contracts', function($table){
-            $table->dropColumn('vendor_id');
+            $table->dropForeign(['vendor_id']);
         });
     }
 }
