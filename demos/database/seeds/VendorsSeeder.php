@@ -15,19 +15,19 @@ class VendorsSeeder extends Seeder
     {
         DB::table('vendors')->insert([
             'vendor_code' => rand(0, 100),
-            'name' => Str::random(10),
+            'name' => "P&G",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('vendors')->insert([
             'vendor_code' => rand(0, 100),
-            'name' => Str::random(10),
+            'name' => "Kellogs",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('vendors')->insert([
             'vendor_code' => rand(0, 100),
-            'name' => Str::random(10),
+            'name' => "Kirkland",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
