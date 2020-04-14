@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call('DepartmentsSeeder');
         $this->call('ContractsToDepartments');
         $this->call('ItemsSeeder');
+        $this->call('ContractsToItems');
+        $this->call('VendorsToItems');
     }
 }
