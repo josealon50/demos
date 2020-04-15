@@ -57,8 +57,33 @@ class ContractsController extends Controller
 
     }
 
-    public function edit(){
-        return (new Response( Contracts::findOrFail($id) ));
+    public function update( $id, Request $request ){
+        //Validate Request 
+        $this->validate( $request, [ 
+            'contract' => 'required|integer',
+            'vendor' => 'required|integer',
+            'description' => 'required|max:255',
+            'budget' => 'required|numeric',
+            'demos' => 'required|integer',
+            'endcaps' => 'required|integer',
+            'start' => 'required|date',
+            'end' => 'required|date',
+
+        ]);
+
+        $contract = Contracts::findOrFail($id);
+
+        $contract->contract_num = $request->contract;
+        $contract->vendor_id = $request->vendor;
+        $contract->description = $request->description;
+        $contract->budget =  $request->budget;
+        $contract->num_demos = $request->demos;
+        $contract->num_endcaps = $request->endcaps;
+        $contract->start_at = Carbon::parse($request->start)->toDateString();
+        $contract->end_at = Carbon::parse($request->end)->toDateString();
+        $contract->save();
+
+        return (new Response( "", 204 ));
     }
 
     public function delete($id){
