@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+class Stores extends Model{
 
-class Contract extends Model
-{
     use SoftDeletes; 
 
-    public $timestamps = true;
+    protected $table = 'stores';
 
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable
@@ -19,13 +19,8 @@ class Contract extends Model
      */
     protected $fillable = [
         'id',
-        'contract_num',
-        'description',
-        'budget',
-        'num_demos',
-        'num_endcaps',
-        'start_at',
-        'end_at',
+        'store_code',
+        'name',
         'deleted_at',
         'created_at',
         'updated_at'
