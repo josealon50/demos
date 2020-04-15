@@ -28,6 +28,19 @@ class ContractsController extends Controller
     }
 
     public function create( Request $request ){
+        //Validate Request 
+        $this->validate( $request, [ 
+            'contract' => 'required|integer',
+            'vendor' => 'required|integer',
+            'description' => 'required|max:255',
+            'budget' => 'required|numeric',
+            'demos' => 'required|integer',
+            'endcaps' => 'required|integer',
+            'start' => 'required|date',
+            'end' => 'required|date',
+
+        ]);
+
         $contract = new Contracts();
 
         $contract->contract_num = $request->contract;

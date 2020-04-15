@@ -19,14 +19,14 @@ class Contracts extends Model
     ];
 
     /**
-     * The attributes that are hidden 
+     * Hidden Attributes
      *
      * @var array
      */
     protected $hidden = [ 'id' ];
 
     /**
-     * The attributes that are dates 
+     * Date attributes
      *
      * @var array
      */
