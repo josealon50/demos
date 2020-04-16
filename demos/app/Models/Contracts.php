@@ -15,7 +15,7 @@ class Contracts extends Model
      * @var array
      */
     protected $fillable = [ 
-        'contract_num', 'vendor_id', 'description', 'budget', 'num_demos', 'num_endcaps', 'start_at', 'end_at', 'deleted_at', 'created_at', 'updated_at' 
+        'id', 'contract_num', 'vendor_id', 'description', 'budget', 'num_demos', 'num_endcaps', 'start_at', 'end_at', 'deleted_at', 'created_at', 'updated_at' 
     ];
 
     /**
@@ -23,7 +23,7 @@ class Contracts extends Model
      *
      * @var array
      */
-    protected $hidden = [ 'id' ];
+    protected $hidden = [];
 
     /**
      * Date attributes

@@ -7,9 +7,15 @@ use App\Transformers\ContractsTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
+use League\Fractal;
+use League\Fractal\Resource\Item;
+use League\Fractal\Resource\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class ContractsController extends Controller
 {
+    protected $manager;
     /**
      * Create a new controller instance.
      *
@@ -18,15 +24,20 @@ class ContractsController extends Controller
     public function __construct()
     {
         //
+        $this->manager = $this->getFractalManager();
     }
 
     public function index(){
-        return (new Response( Contracts::all()->take(25), 200 )); 
+        $contract = Contracts::all();
+        $resource = new Collection($contract, new ContractsTransformer, 'contracts');
+        return $this->manager->createData($resource)->toArray();
     }
 
     public function show($id){
-        return (new ContractsTransformer())->transform( Contracts::findOrFail($id) );
-        //return (new Response( Contracts::findOrFail($id) ));
+        $contract = Contracts::find($id);
+        $resource = new Item($contract, new ContractsTransformer, 'contracts');
+        return $this->manager->createData($resource)->toArray();
+ 
     }
 
     public function create( Request $request ){
