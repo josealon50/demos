@@ -24,7 +24,6 @@ class ContractsController extends Controller
      */
     public function __construct()
     {
-        //
         $this->manager = $this->getFractalManager();
     }
 
@@ -39,7 +38,7 @@ class ContractsController extends Controller
 
     public function show($id){
         $contract = Contracts::find($id);
-        $resource = new item($contract, new contractstransformer, 'contracts');
+        $resource = new item($contract, new ContractsTransformer, 'contracts');
         return $this->manager->createdata($resource)->toarray();
  
     }
@@ -70,7 +69,7 @@ class ContractsController extends Controller
         $contract->end_at = Carbon::parse($request->end)->toDateString();
         $contract->save();
 
-        $resource = new item($contract, new contractstransformer, 'contracts');
+        $resource = new item($contract, new ContractsTransformer, 'contracts');
         return $this->manager->createdata($resource)->toarray();
 
     }
@@ -101,13 +100,13 @@ class ContractsController extends Controller
         $contract->end_at = Carbon::parse($request->end)->toDateString();
         $contract->save();
 
-        $resource = new item($contract, new contractstransformer, 'contracts');
+        $resource = new item($contract, new ContractsTransformer, 'contracts');
         return $this->manager->createdata($resource)->toarray();
     }
 
     public function delete($id){
         $contract = Contracts::findOrFail($id);
-        $resource = new item($contract, new contractstransformer, 'contracts');
+        $resource = new item($contract, new ContractsTransformer, 'contracts');
         return $this->manager->createdata($resource)->toarray();
     }
 }
