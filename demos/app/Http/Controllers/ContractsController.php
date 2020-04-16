@@ -17,7 +17,12 @@ use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class ContractsController extends Controller
 {
+    /**
+     * Manager variable for Fractal
+     *
+     */
     protected $manager;
+
     /**
      * Create a new controller instance.
      *
@@ -28,6 +33,11 @@ class ContractsController extends Controller
         $this->manager = $this->getFractalManager();
     }
 
+    /**
+     * Get All Contracts paginated
+     *
+     * @return Paginator Contracts
+     */
     public function index(){
         $paginator = Contracts::paginate();
         $contracts = $paginator->getCollection();
@@ -37,6 +47,11 @@ class ContractsController extends Controller
         return $this->manager->createData($resource)->toArray();
     }
 
+    /**
+     * Get Contract by id 
+     *
+     * @return Paginator Contracts
+     */
     public function show($id){
         try{
             $contract = Contracts::findOrFail($id);
@@ -55,6 +70,11 @@ class ContractsController extends Controller
  
     }
 
+    /**
+     * Create new Contract 
+     *
+     * @return Contract 
+     */
     public function create( Request $request ){
         //Validate Request 
         $this->validate( $request, [ 
@@ -86,6 +106,11 @@ class ContractsController extends Controller
 
     }
 
+    /**
+     * Update existing Contract 
+     *
+     * @return Contract
+     */
     public function update( $id, Request $request ){
         //Validate Request 
         $this->validate( $request, [ 
@@ -128,6 +153,11 @@ class ContractsController extends Controller
 
     }
 
+    /**
+     * Delete existing Contract 
+     *
+     * @return Contract
+     */
     public function delete($id){
         try{
             $contract = Contracts::findOrFail($id);
