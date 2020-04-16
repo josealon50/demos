@@ -13,6 +13,7 @@ use League\Fractal\Resource\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
+
 class ContractsController extends Controller
 {
     protected $manager;
@@ -28,15 +29,18 @@ class ContractsController extends Controller
     }
 
     public function index(){
-        $contract = Contracts::all();
-        $resource = new Collection($contract, new ContractsTransformer, 'contracts');
+        $paginator = Contracts::paginate();
+        $contracts = $paginator->getCollection();
+
+        $resource = new Collection($contracts, new ContractsTransformer, 'contracts');
+        $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
         return $this->manager->createData($resource)->toArray();
     }
 
     public function show($id){
         $contract = Contracts::find($id);
-        $resource = new Item($contract, new ContractsTransformer, 'contracts');
-        return $this->manager->createData($resource)->toArray();
+        $resource = new item($contract, new contractstransformer, 'contracts');
+        return $this->manager->createdata($resource)->toarray();
  
     }
 
@@ -66,7 +70,8 @@ class ContractsController extends Controller
         $contract->end_at = Carbon::parse($request->end)->toDateString();
         $contract->save();
 
-        return ( new Response( $contract, 201 ) ); 
+        $resource = new item($contract, new contractstransformer, 'contracts');
+        return $this->manager->createdata($resource)->toarray();
 
     }
 
@@ -96,11 +101,13 @@ class ContractsController extends Controller
         $contract->end_at = Carbon::parse($request->end)->toDateString();
         $contract->save();
 
-        return (new Response( "", 204 ));
+        $resource = new item($contract, new contractstransformer, 'contracts');
+        return $this->manager->createdata($resource)->toarray();
     }
 
     public function delete($id){
         $contract = Contracts::findOrFail($id);
-        return (new Response( $contract->delete(), 204 ));
+        $resource = new item($contract, new contractstransformer, 'contracts');
+        return $this->manager->createdata($resource)->toarray();
     }
 }
