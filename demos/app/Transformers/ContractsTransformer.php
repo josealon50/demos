@@ -3,6 +3,7 @@ namespace App\Transformers;
 
 use App\Models\Contracts;
 use League\Fractal;
+use Carbon\Carbon;
 
 class ContractsTransformer extends Fractal\TransformerAbstract
 {
@@ -14,13 +15,13 @@ class ContractsTransformer extends Fractal\TransformerAbstract
         return [
             'id' => $contract->id,
             'contract' => $contract->contract_num,
-            'vendor' => $contract->vendor_id,
+            'vendor' => $contract->vendor,
             'description' => $contract->description,
             'budget' => $contract->budget,
             'demos' => $contract->num_demos,
             'endcaps' => $contract->num_endcaps,
-            'start' => $contract->start_at,
-            'end' => $contract->end_at
+            'start' => Carbon::parse($contract->start_at)->toDateString(),
+            'end' => Carbon::parse($contract->end_at)->toDateString()
         ];
     }
 }

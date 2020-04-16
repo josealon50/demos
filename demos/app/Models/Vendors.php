@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models\Vendors;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vendors extends Model{
 
@@ -10,23 +11,11 @@ class Vendors extends Model{
 
     protected $table = 'vendors';
 
-    public $timestamps = true;
-
-
     /**
      * The attributes that are mass assignable
      *
      * @var array
      */
-    protected $fillable = [
-        'id',
-        'vendor_code',
-        'name',
-        'deleted_at',
-        'created_at',
-        'updated_at'
-    ];
+    protected $fillable = [ 'id', 'vendor_code', 'name', 'deleted_at', 'created_at', 'updated_at' ];
 }
-
-
 ?>

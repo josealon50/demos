@@ -32,5 +32,10 @@ class Contracts extends Model
      */
     protected $dates = [ 'start_at', 'end_at', 'created_at', 'updated_at', 'deleted_at' ];
 
+
+    public function vendor(){
+        return $this->hasOne('App\Models\Vendors', 'id');
+    }
+
 }
 ?>
