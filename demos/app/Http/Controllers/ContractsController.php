@@ -11,6 +11,7 @@ use League\Fractal;
 use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 
@@ -37,9 +38,20 @@ class ContractsController extends Controller
     }
 
     public function show($id){
-        $contract = Contracts::find($id);
-        $resource = new item($contract, new ContractsTransformer, 'contracts');
-        return $this->manager->createdata($resource)->toarray();
+        try{
+            $contract = Contracts::findOrFail($id);
+            $resource = new item($contract, new ContractsTransformer, 'contracts');
+            return $this->manager->createData($resource)->toarray();
+        }
+        catch( ModelNotFoundException $e ){
+            return (new Response( [ 
+                'error' => [ 
+                    'message' => 'Contract Not Found', 
+                    'code' => 100 
+                ] 
+            ], 404 ));
+
+        }
  
     }
 
@@ -70,7 +82,7 @@ class ContractsController extends Controller
         $contract->save();
 
         $resource = new item($contract, new ContractsTransformer, 'contracts');
-        return $this->manager->createdata($resource)->toarray();
+        return $this->manager->createData($resource)->toarray();
 
     }
 
@@ -87,26 +99,49 @@ class ContractsController extends Controller
             'end' => 'required|date',
 
         ]);
+        
+        try{
+            $contract = Contracts::findOrFail($id);
 
-        $contract = Contracts::findOrFail($id);
+            $contract->contract_num = $request->contract;
+            $contract->vendor_id = $request->vendor;
+            $contract->description = $request->description;
+            $contract->budget =  $request->budget;
+            $contract->num_demos = $request->demos;
+            $contract->num_endcaps = $request->endcaps;
+            $contract->start_at = Carbon::parse($request->start)->toDateString();
+            $contract->end_at = Carbon::parse($request->end)->toDateString();
+            $contract->save();
 
-        $contract->contract_num = $request->contract;
-        $contract->vendor_id = $request->vendor;
-        $contract->description = $request->description;
-        $contract->budget =  $request->budget;
-        $contract->num_demos = $request->demos;
-        $contract->num_endcaps = $request->endcaps;
-        $contract->start_at = Carbon::parse($request->start)->toDateString();
-        $contract->end_at = Carbon::parse($request->end)->toDateString();
-        $contract->save();
+            $resource = new item($contract, new ContractsTransformer, 'contracts');
+            return $this->manager->createData($resource)->toarray();
+        }
+        catch( ModelNotFoundException $e ){
+            return (new Response( [ 
+                'error' => [ 
+                    'message' => 'Contract Not Found', 
+                    'code' => 100 
+                ] 
+            ], 404 ));
 
-        $resource = new item($contract, new ContractsTransformer, 'contracts');
-        return $this->manager->createdata($resource)->toarray();
+        }
+
     }
 
     public function delete($id){
-        $contract = Contracts::findOrFail($id);
-        $resource = new item($contract, new ContractsTransformer, 'contracts');
-        return $this->manager->createdata($resource)->toarray();
+        try{
+            $contract = Contracts::findOrFail($id);
+            $resource = new item($contract, new ContractsTransformer, 'contracts');
+            return $this->manager->createData($resource)->toarray();
+        }
+        catch( ModelNotFoundException $e ){
+            return (new Response( [ 
+                'error' => [ 
+                    'message' => 'Contract Not Found', 
+                    'code' => 100 
+                ] 
+            ], 404 ));
+
+        }
     }
 }

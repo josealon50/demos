@@ -9,6 +9,8 @@ class Contracts extends Model
 {
     use SoftDeletes; 
 
+    protected $dateFormat = 'm/d/Y';
+
     /**
      * The attributes that are mass assignable
      *
@@ -32,6 +34,12 @@ class Contracts extends Model
      */
     protected $dates = [ 'start_at', 'end_at', 'created_at', 'updated_at', 'deleted_at' ];
 
+    /**
+     * Casting of attributes
+     *
+     * @var array
+     */
+    protected $casts = [ 'deleted_at'  => 'date:m/d/Y', 'created_at' => 'date:m/d/Y', 'updated_at' => 'date:m/d/Y', ];
 
     public function vendor(){
         return $this->hasOne('App\Models\Vendors', 'id');
