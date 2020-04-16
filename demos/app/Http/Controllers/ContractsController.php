@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contracts;
+use App\Transformers\ContractsTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
@@ -24,7 +25,8 @@ class ContractsController extends Controller
     }
 
     public function show($id){
-        return (new Response( Contracts::findOrFail($id) ));
+        return (new ContractsTransformer())->transform( Contracts::findOrFail($id) );
+        //return (new Response( Contracts::findOrFail($id) ));
     }
 
     public function create( Request $request ){
