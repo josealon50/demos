@@ -15,7 +15,7 @@ class VendorsToItems extends Seeder
         $vendor = DB::table('vendors')->where('id', '=', 1)->value('id');
         $item = DB::table('items')->where('id', '=', 1)->value('id');
 
-        DB::table('items_to_vendors')->insert([
+        DB::table('vendors_to_items')->insert([
             'vendor_id' => $vendor,
             'item_id' => $item,
             'updated_at' => Carbon::now()->toDateTimeString(),
@@ -25,7 +25,7 @@ class VendorsToItems extends Seeder
         $vendor = DB::table('vendors')->where('id', '=', 2)->value('id');
         $item = DB::table('items')->where('id', '=', 2)->value('id');
 
-        DB::table('items_to_vendors')->insert([
+        DB::table('vendors_to_items')->insert([
             'vendor_id' => $vendor,
             'item_id' => $item,
             'updated_at' => Carbon::now()->toDateTimeString(),
@@ -35,7 +35,7 @@ class VendorsToItems extends Seeder
         $vendor = DB::table('vendors')->where('id', '=', 3)->value('id');
         $item = DB::table('items')->where('id', '=', 3)->value('id');
 
-        DB::table('items_to_vendors')->insert([
+        DB::table('vendors_to_items')->insert([
             'vendor_id' => $vendor,
             'item_id' => $item,
             'updated_at' => Carbon::now()->toDateTimeString(),
