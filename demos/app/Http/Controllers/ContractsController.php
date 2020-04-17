@@ -14,6 +14,10 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
+/**
+ * @group Contracts Management
+ * APIs for managing Contracts
+ */
 
 class ContractsController extends Controller
 {
@@ -35,8 +39,12 @@ class ContractsController extends Controller
 
     /**
      * Get All Contracts paginated
+     * Endpoint will return a pagination object with all Contracts 
      *
-     * @return Paginator Contracts
+     * @urlParam id required The ID of the contract.
+     *
+     * @transformercollection \App\Transformers\ContractsTransformer
+     * @transformerModel \App\Models\Contracts 
      */
     public function index(){
         $paginator = Contracts::paginate();
@@ -49,8 +57,23 @@ class ContractsController extends Controller
 
     /**
      * Get Contract by id 
+     * Endpoiin will return contract by url param
      *
-     * @return Paginator Contracts
+     * @urlParam id required The ID of the contract.
+     * @bodyParam contract int required The contract_num of the contract. Example: 9
+     * @bodyParam vendor int required The contract_num of the contract. Example: 9
+     * @bodyParam description int required The contract_num of the contract. Example: 9
+     * @bodyParam budget float required The budget of the contract. Example: 23022.12
+     * @bodyParam demos int required The num_demos (number of demos) of the contract. Example: 9
+     * @bodyParam endcaps int required The num_endcaps (number of endcaps) of the contract. Example: 9
+     * @bodyParam star date required The start_at starting date of the contract. Example: 9
+     * @bodyParam end date required The end_at ending date of the contract. Example: 9
+     *
+     * @transformercollection \App\Transformers\ContractsTransformer
+     * @transformerModel \App\Models\Contracts 
+     * @response 404 {
+     *      "message" : "Contract Not Found" for Model [App\Models\Contracts]
+     * }
      */
     public function show($id){
         try{
@@ -72,8 +95,18 @@ class ContractsController extends Controller
 
     /**
      * Create new Contract 
+     * Enpoint will create a new contract. 
+     * @bodyParam contract int required The contract_num of the contract. Example: 9
+     * @bodyParam vendor int required The contract_num of the contract. Example: 9
+     * @bodyParam description int required The contract_num of the contract. Example: 9
+     * @bodyParam budget float required The budget of the contract. Example: 23022.12
+     * @bodyParam demos int required The num_demos (number of demos) of the contract. Example: 9
+     * @bodyParam endcaps int required The num_endcaps (number of endcaps) of the contract. Example: 9
+     * @bodyParam star date required The start_at starting date of the contract. Example: 9
+     * @bodyParam end date required The end_at ending date of the contract. Example: 9
      *
-     * @return Contract 
+     * @transformercollection \App\Transformers\ContractsTransformer
+     * @transformerModel \App\Models\Contracts 
      */
     public function create( Request $request ){
         //Validate Request 
@@ -108,8 +141,24 @@ class ContractsController extends Controller
 
     /**
      * Update existing Contract 
+     * Endpoint will update a contract.
      *
-     * @return Contract
+     * @urlParam id required The ID of the contract.
+     *
+     * @bodyParam contract int required The contract_num of the contract. Example: 9
+     * @bodyParam vendor int required The contract_num of the contract. Example: 9
+     * @bodyParam description int required The contract_num of the contract. Example: 9
+     * @bodyParam budget float required The budget of the contract. Example: 23022.12
+     * @bodyParam demos int required The num_demos (number of demos) of the contract. Example: 9
+     * @bodyParam endcaps int required The num_endcaps (number of endcaps) of the contract. Example: 9
+     * @bodyParam star date required The start_at starting date of the contract. Example: 9
+     * @bodyParam end date required The end_at ending date of the contract. Example: 9
+     *
+     * @transformercollection \App\Transformers\ContractsTransformer
+     * @transformerModel \App\Models\Contracts 
+     * @response 404 {
+     *      "message" : "Contract Not Found" for Model [App\Models\Contracts]
+     * }
      */
     public function update( $id, Request $request ){
         //Validate Request 
@@ -155,8 +204,16 @@ class ContractsController extends Controller
 
     /**
      * Delete existing Contract 
+     * Endpoint will do a soft delete on contrat record.
      *
-     * @return Contract
+     * @urlParam id required The ID of the contract.
+     *
+     * @transformercollection \App\Transformers\ContractsTransformer
+     * @transformerModel \App\Models\Contracts 
+     *
+     * @response 404 {
+     *      "message" : "Contract Not Found" for Model [App\Models\Contracts]
+     * }
      */
     public function delete($id){
         try{
