@@ -12,7 +12,14 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$router->get('/', function () use ($router) { 
+    return $router->app->version(); 
+});
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->group(['prefix' => 'v1'], function () use ($router) {
+    $router->get('/contracts', ['as' => 'api.v1.index', 'uses' => 'ContractsController@index'] );
+    $router->post('/contracts', ['as' => 'api.v1.create', 'uses' => 'ContractsController@create'] );
+    $router->get('/contracts/{id}', ['as' => 'api.v1.show', 'uses' => 'ContractsController@show'] );
+    $router->put('/contracts/{id}', ['as' => 'api.v1.update', 'uses' => 'ContractsController@update'] );
+    $router->delete('/contracts/{id}', ['as' => 'api.v1.delete', 'uses' => 'ContractsController@delete'] );
 });
