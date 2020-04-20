@@ -1,0 +1,18 @@
+# The Node version that we'll be running for our version of React.
+# You may have to search the Node directory for a version that fits
+# the version of React you're using.
+FROM node:13.13.0-alpine3.10
+
+# Create a work directory and copy over our dependency manifest files.
+RUN mkdir /usr/app
+WORKDIR /usr/app
+
+COPY ./ui/package.json ./
+RUN npm install 
+COPY ./ui ./
+
+# Expose PORT 3000 on our virtual machine so we can run our server
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]
+

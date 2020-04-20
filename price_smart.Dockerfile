@@ -6,8 +6,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 #Install Apache, php, vim, and composer
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y php7.2-dev  build-essential libaio1 apache2 apache2-utils composer openssl php7.2-zip php7.2-mbstring vim php7.2-mysql libapache2-mod-php7.2
 
-
-EXPOSE 80 443
 ENV APACHE_RUN_USER  www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR   /var/log/apache2
@@ -28,9 +26,12 @@ RUN mkdir -p $APACHE_LOG_DIR
 
 RUN a2enmod rewrite
 
-
 #Install composer
 RUN composer global require "laravel/lumen-installer"
+RUN composer require flipbox/lumen-generator
+RUN composer require league/fractal
+RUN composer require mpociot/laravel-apidoc-generator
+
 
 WORKDIR /var/www/html
 

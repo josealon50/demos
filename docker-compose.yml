@@ -1,4 +1,4 @@
-version: '2'
+version: '3.2'
 
 services:
     price_smart:
@@ -6,11 +6,27 @@ services:
             context: .
             dockerfile: price_smart.Dockerfile
         image: price_smart_schedule_demos
-        volumes:
-            - ./demos:/var/www/html
+        hostname: pricesmartapi.local
         ports:
-            - "80:80"
-            - "8080:8080"
+            - "8080:80"
+        volumes:
+            - "./demos:/var/www/html:rw"
+        networks: 
+            - price_smart_network
+    price_smart_front:
+        build:
+            context: .
+            dockerfile: price_smart_front.Dockerfile
+        image: price_smart_front
+        stdin_open: true
+        hostname: pricesmart.local
+        command: npm start
+        ports:
+            - "80:3000"
+        volumes:
+            - ./ui/:/app
+        networks: 
+            - price_smart_network
     price_smart_db:
         image: mysql:8.0.19
         command: --default-authentication-plugin=mysql_native_password
@@ -23,6 +39,12 @@ services:
             MYSQL_USER: 'price_smart'
             MYSQL_PASSWORD: 'password'
             MYSQL_DATABASE: 'price_smart_db'
+        networks: 
+            - price_smart_network
 volumes:
     price_smart_db_dev:
+        external: true
+networks:
+    price_smart_network:
+        external: true
 
