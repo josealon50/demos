@@ -16,9 +16,7 @@ class Contracts extends Model
      *
      * @var array
      */
-    protected $fillable = [ 
-        'id', 'contract_num', 'vendor_id', 'description', 'budget', 'num_demos', 'num_endcaps', 'start_at', 'end_at', 'deleted_at', 'created_at', 'updated_at' 
-    ];
+    protected $fillable = [ 'id', 'contract_num', 'vendor_id', 'description', 'budget', 'num_demos', 'num_endcaps', 'start_at', 'end_at', 'deleted_at', 'created_at', 'updated_at' ];
 
     /**
      * Hidden Attributes
@@ -43,6 +41,10 @@ class Contracts extends Model
 
     public function vendor(){
         return $this->hasOne('App\Models\Vendors', 'id');
+    }
+
+    public function items(){
+        return $this->hasMany( 'App\Models\ContractsToItems', 'contract_id');
     }
 
 }

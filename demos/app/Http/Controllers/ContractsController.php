@@ -65,16 +65,16 @@ class ContractsController extends Controller
             $contracts->where( 'contract_num', '=', $request['contract'] );
         }
         if( isset($request['vendor']) && $request['vendor'] != '' ){
-            $contracts->where( 'vendor_id', '=', $request['vendor_id'] );
+            $contracts->where( 'vendor_id', '=', $request['vendor'] );
         }
         if( isset($request['item']) && $request['item'] != '' ){
             $contracts->join( 'contracts_to_items', 'contract_id', '=', 'contracts.id' )->whereIn( 'item_id', [ $request['item'] ] );
         }
         if( isset($request['start']) && $request['start'] != '' ){
-            $contracts->whereDate( 'start', '>=', $request['start'] );
+            $contracts->whereDate( 'start_at', '>=', Carbon::parse($request['start'])->toDateString() );
         }
         if( isset($request['end']) && $request['end'] != '' ){
-            $contracts->whereDate( 'end', '>=', $request['end'] );
+            $contracts->whereDate( 'end_at', '<=', Carbon::parse($request['end'])->toDateString() );
         }
  
         $contracts = $contracts->get();
