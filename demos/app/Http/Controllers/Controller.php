@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use League\Fractal\Manager;
 use League\Fractal\Serializer\JsonApiSerializer;
 use Illuminate\Support\Facades\Auth;
+use App\Transformers\TokenTransformer;
+use League\Fractal;
+use League\Fractal\Resource\Item;
+use League\Fractal\Resource\Collection;
 
 
 
 class Controller extends BaseController
 {
-    //
     public function getFractalManager(){
         $request = app(Request::class);
         $manager = new Manager();
@@ -25,10 +28,9 @@ class Controller extends BaseController
 
     protected function respondWithToken($token)
     {
-        return response()->json([
-            'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * 60
-        ], 200);
+        $manager = $this->getFractalManager();
+        $arr = [ 'token' => $token, 'token_type' => 'bearer', 'expires_in' => Auth::factory()->getTTL() * 60 ];
+        $resource = new Item($arr, new TokenTransformer, 'token');
+        return $manager->createData($resource)->toarray();
     }
 }

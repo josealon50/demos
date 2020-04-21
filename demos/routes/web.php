@@ -17,14 +17,14 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'v1'], function () use ($router) {
-    $router->post('/login', 'AuthController@login');
-    $router->post('/logout', 'AuthController@logout');
-    $router->get('/users', 'UsersController@index');
-    $router->get('/users/{id}', 'UsersController@show');
-    $router->post('/users', 'UsersController@create');
-    $router->get('/contracts', ['as' => 'api.v1.index', 'uses' => 'ContractsController@index'] );
-    $router->post('/contracts', ['as' => 'api.v1.create', 'uses' => 'ContractsController@create'] );
-    $router->get('/contracts/{id}', ['as' => 'api.v1.show', 'uses' => 'ContractsController@show'] );
-    $router->put('/contracts/{id}', ['as' => 'api.v1.update', 'uses' => 'ContractsController@update'] );
-    $router->delete('/contracts/{id}', ['as' => 'api.v1.delete', 'uses' => 'ContractsController@delete'] );
+    $router->post('/login', ['as' => 'api.v1.authcontroller.login', 'uses' => 'AuthController@login'] );
+    $router->post('/logout', ['as' => 'api.v1.authcontroller.logout', 'uses' =>  'AuthController@logout'] );
+    $router->get('/users', ['as' => 'api.v1.users.index', 'uses' => 'UsersController@index'] );
+    $router->get('/users/{id}', ['as' => 'api.v1.users.show', 'uses' =>  'UsersController@show'] );
+    $router->post('/users', ['as' => 'api.v1.users.create', 'uses' => 'UsersController@create'] );
+    $router->get('/contracts', ['as' => 'api.v1.contracts.index', 'uses' => 'ContractsController@index'] );
+    $router->post('/contracts', ['as' => 'api.v1.contracts.create', 'uses' => 'ContractsController@create'] );
+    $router->get('/contracts/{id}', ['as' => 'api.v1.contracts.show', 'uses' => 'ContractsController@show'] );
+    $router->put('/contracts/{id}', ['as' => 'api.v1.contracts.update', 'uses' => 'ContractsController@update'] );
+    $router->delete('/contracts/{id}', ['as' => 'api.v1.contracts.delete', 'uses' => 'ContractsController@delete'] );
 });

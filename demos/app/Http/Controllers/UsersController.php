@@ -29,7 +29,7 @@ class UsersController extends Controller {
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
         $this->manager = $this->getFractalManager();
     }
 
@@ -78,7 +78,7 @@ class UsersController extends Controller {
     {
         try {
             $user = Users::findOrFail($id);
-            $resource = new item($user, new UsersTransformer, 'users');
+            $resource = new Item($user, new UsersTransformer, 'users');
             return $this->manager->createData($resource)->toarray();
         } 
         catch ( ModelNotFoundException $e ) {
