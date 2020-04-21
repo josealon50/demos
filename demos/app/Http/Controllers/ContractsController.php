@@ -13,7 +13,6 @@ use League\Fractal\Resource\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
-use DB;
 
 /**
  * @group Contracts Management
@@ -109,7 +108,7 @@ class ContractsController extends Controller
     public function show($id){
         try{
             $contract = Contracts::findOrFail($id);
-            $resource = new item($contract, new ContractsTransformer, 'contracts');
+            $resource = new Item($contract, new ContractsTransformer, 'contracts');
             return $this->manager->createData($resource)->toarray();
         }
         catch( ModelNotFoundException $e ){

@@ -17,6 +17,11 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'v1'], function () use ($router) {
+    $router->post('/login', 'AuthController@login');
+    $router->post('/logout', 'AuthController@logout');
+    $router->get('/users', 'UsersController@index');
+    $router->get('/users/{id}', 'UsersController@show');
+    $router->post('/users', 'UsersController@create');
     $router->get('/contracts', ['as' => 'api.v1.index', 'uses' => 'ContractsController@index'] );
     $router->post('/contracts', ['as' => 'api.v1.create', 'uses' => 'ContractsController@create'] );
     $router->get('/contracts/{id}', ['as' => 'api.v1.show', 'uses' => 'ContractsController@show'] );
