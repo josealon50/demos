@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Contracts extends Model
+class ContractsToItems extends Model
 {
     use SoftDeletes; 
+
+    protected $table = 'contracts_to_items';
 
     protected $dateFormat = 'm/d/Y';
 
@@ -16,7 +18,7 @@ class Contracts extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'id', 'contract_num', 'vendor_id', 'description', 'budget', 'num_demos', 'num_endcaps', 'start_at', 'end_at', 'deleted_at', 'created_at', 'updated_at' ];
+    protected $fillable = [ 'id', 'contract_id', 'item_id', 'deleted_at', 'created_at',  'updated_at' ];
 
     /**
      * Hidden Attributes
@@ -30,7 +32,7 @@ class Contracts extends Model
      *
      * @var array
      */
-    protected $dates = [ 'start_at', 'end_at', 'created_at', 'updated_at', 'deleted_at' ];
+    protected $dates = [  'created_at', 'updated_at', 'deleted_at' ];
 
     /**
      * Casting of attributes
@@ -39,13 +41,4 @@ class Contracts extends Model
      */
     protected $casts = [ 'deleted_at'  => 'date:m/d/Y', 'created_at' => 'date:m/d/Y', 'updated_at' => 'date:m/d/Y', ];
 
-    public function vendor(){
-        return $this->hasOne('App\Models\Vendors', 'id');
-    }
-
-    public function items(){
-        return $this->hasMany( 'App\Models\ContractsToItems', 'contract_id');
-    }
-
 }
-?>
