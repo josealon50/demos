@@ -13,6 +13,7 @@ use League\Fractal\Resource\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use DB;
 
 /**
  * @group Contracts Management
@@ -46,13 +47,43 @@ class ContractsController extends Controller
      * @transformercollection \App\Transformers\ContractsTransformer
      * @transformerModel \App\Models\Contracts 
      */
-    public function index(){
+    public function index( Request $request ){
+        //Validate Request 
+        $this->validate( $request, [ 
+            'contract' => 'integer',
+            'vendor' => 'integer',
+            'items' => 'integer',
+            'start' => 'date',
+            'end' => 'date',
+
+        ]);
+        
+        $contracts = Contracts::query();
+        
+        //Build where clause
+        if( isset($request['contract']) && $request['contract'] != '' ){
+            $contracts->where( 'contract_num', '=', $request['contract'] );
+        }
+        if( isset($request['vendor']) && $request['vendor'] != '' ){
+            $contracts->where( 'vendor_id', '=', $request['vendor_id'] );
+        }
+        if( isset($request['item']) && $request['item'] != '' ){
+            $contracts->join( 'contracts_to_items', 'contract_id', '=', 'contracts.id' )->whereIn( 'item_id', [ $request['item'] ] );
+        }
+        if( isset($request['start']) && $request['start'] != '' ){
+            $contracts->whereDate( 'start', '>=', $request['start'] );
+        }
+        if( isset($request['end']) && $request['end'] != '' ){
+            $contracts->whereDate( 'end', '>=', $request['end'] );
+        }
+ 
+        $contracts = $contracts->get();
         $paginator = Contracts::paginate();
-        $contracts = $paginator->getCollection();
 
         $resource = new Collection($contracts, new ContractsTransformer, 'contracts');
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
         return $this->manager->createData($resource)->toArray();
+
     }
 
     /**
@@ -134,8 +165,9 @@ class ContractsController extends Controller
         $contract->end_at = Carbon::parse($request->end)->toDateString();
         $contract->save();
 
-        $resource = new item($contract, new ContractsTransformer, 'contracts');
-        return $this->manager->createData($resource)->toarray();
+        //$resource = new item($contract, new ContractsTransformer, 'contracts');
+        //return $this->manager->createData($resource)->toarray();
+        return (new Response( "", 201 ));
 
     }
 
