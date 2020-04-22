@@ -149,6 +149,72 @@ class UsersController extends Controller {
         }
 
     }
+    /**
+     * Edit User 
+     * Enpoint will create a new user. 
+     * @urlParam id int id of User to edit
+     * @bodyParam username string required username Example: crodriguez
+     * @bodyParam password string required password  Example: password
+     *
+     * @transformercollection \App\Transformers\UsersTransformer
+     * @transformerModel \App\Models\Users 
+     */
+    public function edit($id, Request $request)
+    {
+        //validate incoming request
+        $this->validate($request, [
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        try {
+            $user = Users::findOrFail($id);
+            $user->username = $request->input('username');
+            $plainPassword = $request->input('password');
+            $user->password = app('hash')->make($plainPassword);
+            $user->save();
+
+            //return successful response
+            return (new Response( "", 201 ));
+
+        } catch (ModelNotFoundException $e) {
+            //return error message
+            return (new Response( [ 
+                'error' => [ 
+                    'message' => 'User Not Found', 
+                    'code' => 200 
+                ] 
+            ], 404 ));
+        }
+
+    }
+
+    /**
+     * Delete User 
+     * Enpoint will delete user. 
+     * @urlParam id int id of User to edit
+     *
+     * @transformercollection \App\Transformers\UsersTransformer
+     * @transformerModel \App\Models\Users 
+     */
+    public function delete($id)
+    {
+        try {
+            $user = Users::findOrFail($id);
+            $user->delete();
+            return (new Response( "", 201 ));
+
+        } catch (ModelNotFoundException $e) {
+            //return error message
+            return (new Response( [ 
+                'error' => [ 
+                    'message' => 'User Not Found', 
+                    'code' => 200 
+                ] 
+            ], 404 ));
+        }
+
+    }
 
 }
 

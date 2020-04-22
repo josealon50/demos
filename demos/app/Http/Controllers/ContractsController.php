@@ -252,8 +252,8 @@ class ContractsController extends Controller
     public function delete($id){
         try{
             $contract = Contracts::findOrFail($id);
-            $resource = new item($contract, new ContractsTransformer, 'contracts');
-            return $this->manager->createData($resource)->toarray();
+            $contract->delete();
+            return (new Response( "", 201 ));
         }
         catch( ModelNotFoundException $e ){
             return (new Response( [ 
