@@ -13,6 +13,8 @@ use League\Fractal\Resource\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use Illuminate\Support\Facades\Auth;
+
 
 /**
  * @group Contracts Management
@@ -34,6 +36,7 @@ class ContractsController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         $this->manager = $this->getFractalManager();
     }
 

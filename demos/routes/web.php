@@ -18,7 +18,8 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->post('/login', ['as' => 'api.v1.authcontroller.login', 'uses' => 'AuthController@login'] );
-    $router->post('/logout', ['as' => 'api.v1.authcontroller.logout', 'uses' =>  'AuthController@logout'] );
+});
+$router->group(['prefix' => 'v1', 'middleware' => 'auth:v1'], function () use ($router) {
     $router->get('/users', ['as' => 'api.v1.users.index', 'uses' => 'UsersController@index'] );
     $router->get('/users/{id}', ['as' => 'api.v1.users.show', 'uses' =>  'UsersController@show'] );
     $router->post('/users', ['as' => 'api.v1.users.create', 'uses' => 'UsersController@create'] );

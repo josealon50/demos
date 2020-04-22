@@ -1,12 +1,12 @@
 <?php
 return [
     'defaults' => [
-        'guard' => 'api',
+        'guard' => 'v1',
         'passwords' => 'users',
     ],
 
     'guards' => [
-        'api' => [
+        'v1' => [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
