@@ -90,7 +90,7 @@ class ContractsController extends Controller
 
     /**
      * Get Contract by id 
-     * Endpoiin will return contract by url param
+     * Endpoint will return contract by url param
      *
      * @urlParam id required The ID of the contract.
      * @bodyParam contract int required The contract_num of the contract. Example: 9

@@ -13,7 +13,12 @@ use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Users Management
+ * APIs for managing Users
+ */
 class UsersController extends Controller {
 
     /**
@@ -29,24 +34,31 @@ class UsersController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth');
         $this->manager = $this->getFractalManager();
     }
 
     /**
-     * Get the authenticated User.
+     * Get the authenticated user 
+     * Endpoint will return the authorized  
      *
-     * @return Response
+     * @transformercollection \App\Transformers\UsersTransformer
+     * @transformerModel \App\Models\Users 
      */
     public function profile()
     {
-        return response()->json(['user' => Auth::user()], 200);
+        $resource = new Item(Auth::user(), new UsersTransformer, 'users');
+        return $this->manager->createData($resource)->toarray();
     }
 
     /**
-     * Get all User.
+     * Get the authenticated user 
+     * Endpoint will return the authorized  
      *
-     * @return Response
+     * @transformercollection \App\Transformers\UsersTransformer
+     * @transformerModel \App\Models\Users 
+     * @response 200 {
+     *      "
+     * }
      */
     public function index()
     {
@@ -70,10 +82,17 @@ class UsersController extends Controller {
     }
 
     /**
-     * Get one user.
+     * Get User by id
      *
-     * @return Response
-     */
+     *
+     * @urlParam id required The ID of the user.
+     *
+     * @transformercollection \App\Transformers\ContractsTransformer
+     * @transformerModel \App\Models\Contracts 
+     * @response 404 {
+     *      "message" : "Contract Not Found" for Model [App\Models\Contracts]
+     * }
+     **/
     public function show($id)
     {
         try {
@@ -93,10 +112,13 @@ class UsersController extends Controller {
     }
 
     /**
-     * Create new user.
+     * Create new User 
+     * Enpoint will create a new user. 
+     * @bodyParam username string required username Example: crodriguez
+     * @bodyParam password string required password  Example: password
      *
-     * @param  Request  $request
-     * @return Response
+     * @transformercollection \App\Transformers\ContractsTransformer
+     * @transformerModel \App\Models\Contracts 
      */
     public function create(Request $request)
     {

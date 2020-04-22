@@ -21,6 +21,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
 });
 $router->group(['prefix' => 'v1', 'middleware' => 'auth:v1'], function () use ($router) {
     $router->get('/users', ['as' => 'api.v1.users.index', 'uses' => 'UsersController@index'] );
+    $router->get('/users/profile', ['as' => 'api.v1.users.index', 'uses' => 'UsersController@profile'] );
     $router->get('/users/{id}', ['as' => 'api.v1.users.show', 'uses' =>  'UsersController@show'] );
     $router->post('/users', ['as' => 'api.v1.users.create', 'uses' => 'UsersController@create'] );
     $router->get('/contracts', ['as' => 'api.v1.contracts.index', 'uses' => 'ContractsController@index'] );

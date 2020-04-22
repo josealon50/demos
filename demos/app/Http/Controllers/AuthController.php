@@ -1,16 +1,28 @@
 <?php   
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Auth Management
+ * APIs for managing Log Ins
+ **/
 class AuthController extends Controller
 {
-     /**
-     * Get a JWT via given credentials.
+    /**
+     * Login Endpoint
+     * Endpoint will return a JWT token if credentials are correct
      *
-     * @param  Request  $request
-     * @return Response
+     * @bodyParam username string required Username tyring to log in. Example: username
+     * @bodyParam password string required password for user.  Example: password
+     *
+     * @transformercollection \App\Transformers\TokenTransformer
+     * @transformerModel \App\Models\Users 
+     * @response 409 {
+     *      "message" : "Unauthorized" for Model [App\Models\Users]
+     * }
      */
     public function login(Request $request)
     {
