@@ -16,6 +16,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version(); 
 });
 
+$router->group(['prefix' => 'v1'], function () use ($router) {
+    $router->post('/login', ['as' => 'api.v1.authcontroller.login', 'uses' => 'AuthController@login'] );
+});
+
 $router->group(['prefix' => 'v1', 'middleware' => 'auth:v1'], function () use ($router) {
     $router->get('/users', ['as' => 'api.v1.users.index', 'uses' => 'UsersController@index'] );
     $router->get('/users/profile', ['as' => 'api.v1.users.index', 'uses' => 'UsersController@profile'] );
