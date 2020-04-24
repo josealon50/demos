@@ -13,7 +13,8 @@ use League\Fractal\Resource\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
-use DB;
+use Illuminate\Support\Facades\Auth;
+
 
 /**
  * @group Contracts Management
@@ -35,6 +36,7 @@ class ContractsController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         $this->manager = $this->getFractalManager();
     }
 
@@ -88,7 +90,7 @@ class ContractsController extends Controller
 
     /**
      * Get Contract by id 
-     * Endpoiin will return contract by url param
+     * Endpoint will return contract by url param
      *
      * @urlParam id required The ID of the contract.
      * @bodyParam contract int required The contract_num of the contract. Example: 9
@@ -109,7 +111,7 @@ class ContractsController extends Controller
     public function show($id){
         try{
             $contract = Contracts::findOrFail($id);
-            $resource = new item($contract, new ContractsTransformer, 'contracts');
+            $resource = new Item($contract, new ContractsTransformer, 'contracts');
             return $this->manager->createData($resource)->toarray();
         }
         catch( ModelNotFoundException $e ){
@@ -250,8 +252,8 @@ class ContractsController extends Controller
     public function delete($id){
         try{
             $contract = Contracts::findOrFail($id);
-            $resource = new item($contract, new ContractsTransformer, 'contracts');
-            return $this->manager->createData($resource)->toarray();
+            $contract->delete();
+            return (new Response( "", 201 ));
         }
         catch( ModelNotFoundException $e ){
             return (new Response( [ 
