@@ -22,4 +22,9 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('/contracts/{id}', ['as' => 'api.v1.show', 'uses' => 'ContractsController@show'] );
     $router->put('/contracts/{id}', ['as' => 'api.v1.update', 'uses' => 'ContractsController@update'] );
     $router->delete('/contracts/{id}', ['as' => 'api.v1.delete', 'uses' => 'ContractsController@delete'] );
+    $router->get('/vendors', ['as' => 'api.v1.index', 'uses' => 'VendorsController@index'] );
+    $router->get('/vendors/{id}', ['as' => 'api.v1.show', 'uses' => 'VendorsController@show'] );
+    $router->post('/vendors', ['as' => 'api.v1.create', 'uses' => 'VendorsController@create'] );
+    $router->put('/vendors/{id}', ['as' => 'api.v1.update', 'uses' => 'VendorsController@update'] );
+    $router->delete('/vendors/{id}', ['as' => 'api.v1.delete', 'uses' => 'VendorsController@delete'] );   
 });
