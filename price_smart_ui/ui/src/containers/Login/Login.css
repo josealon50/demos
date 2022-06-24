@@ -1,0 +1,58 @@
+Html, body{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+div.form {
+    display: block;
+    text-align: center;
+}
+
+form {
+    display: inline-block;
+    width: 300px;
+}
+input {
+    width: 150%;
+    padding: 10px 20px 5px 5px;
+    margin: 2px 0;
+    box-sizing: border-box;
+}
+input.placeholder{
+    text-align: center;
+}
+
+button {
+    width: 150%;
+    padding: 8px 12px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    text-align:center;  
+    color: white;
+    background-color: #0000a3;
+}
+
+button:hover {
+    background-color: #A9A9A9;
+}
+
+img {
+    display: block; 
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align:center;
+}
+
+.grandParentContainer{
+    display: table;
+    height: 100%;
+    margin: 0 auto;
+
+}
+
+.parentContainer{
+    display: table-cell;
+    vertical-align: middle;
+}
