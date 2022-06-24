@@ -16,7 +16,7 @@ class CreateStoreTable extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->integer('store_code');
-            $table->mediumText('store_name');
+            $table->mediumText('name');
             $table->softDeletes('deleted_at', 0);
             $table->timestamps();
         });

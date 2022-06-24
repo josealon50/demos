@@ -13,7 +13,7 @@ class CreateItemsToVendors extends Migration
      */
     public function up()
     {
-        Schema::create('items_to_vendors', function (Blueprint $table) {
+        Schema::create('vendors_to_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vendor_id');
             $table->foreignId('item_id');
@@ -33,6 +33,6 @@ class CreateItemsToVendors extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items_to_vendors');
+        Schema::dropIfExists('vendors_to_items');
     }
 }
